@@ -1,4 +1,4 @@
-package com.google;
+package java.com.google;
 
 /** A class used to represent a Playlist */
 class VideoPlaylist {
