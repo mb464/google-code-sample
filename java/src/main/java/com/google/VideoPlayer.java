@@ -7,6 +7,7 @@ import java.util.List;
 public class VideoPlayer {
 
   private Video playing;
+  private Video paused;
 
   private final VideoLibrary videoLibrary;
 
@@ -29,7 +30,7 @@ public class VideoPlayer {
   }
 
   public void playVideo(String videoId) {
-    if(playing != null){
+    if(playing != null || paused != null){
       stopVideo();
     }
     playing = videoLibrary.getVideo(videoId);
@@ -42,10 +43,12 @@ public class VideoPlayer {
   }
 
   public void stopVideo() {
-    if (playing == null){
+    if (playing == null && paused == null){
       System.out.println("Cannot stop video: No video is currently playing");
+    }else if(playing == null && paused != null){
+      System.out.println("Stopping video: "+paused.getTitle());
+      paused = null;
     }else{
-
       System.out.println("Stopping video: "+playing.getTitle());
       playing = null;
     }
@@ -68,7 +71,19 @@ public class VideoPlayer {
   }
 
   public void pauseVideo() {
-    System.out.println("pauseVideo needs implementation");
+    if(paused != null){
+      System.out.println("Video already paused: "+paused.getTitle());
+      playing = null;
+    }
+
+    if (playing == null){
+      System.out.println("Cannot pause video: No video is currently playing");
+    }else{
+      paused = new Video(playing.getTitle(), playing.getVideoId(), playing.getTags());
+      System.out.println("Pausing video: "+paused.getTitle());
+      playing = null;
+    }
+
   }
 
   public void continueVideo() {
