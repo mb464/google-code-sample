@@ -1,6 +1,7 @@
 package com.google;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 
 public class VideoPlayer {
@@ -44,12 +45,26 @@ public class VideoPlayer {
     if (playing == null){
       System.out.println("Cannot stop video: No video is currently playing");
     }else{
+
       System.out.println("Stopping video: "+playing.getTitle());
+      playing = null;
     }
   }
 
   public void playRandomVideo() {
-    System.out.println("playRandomVideo needs implementation");
+    List<Video> vlib = videoLibrary.getVideos();
+    if (playing != null){
+      stopVideo();
+    }
+
+    if (vlib.size() < 1){
+      System.out.println("No videos available");
+    }else{
+      Random rand = new Random(); //instance of random class
+      int int_random = rand.nextInt(vlib.size());
+      List<Video> videos = vlib;
+      playVideo(videos.get(int_random).getVideoId());
+    }
   }
 
   public void pauseVideo() {
