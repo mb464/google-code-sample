@@ -30,7 +30,7 @@ public class VideoPlayer {
   }
 
   public void playVideo(String videoId) {
-    if(playing != null || paused != null){
+    if(playing != null || paused.getVideoId() != videoId){
       stopVideo();
     }
     playing = videoLibrary.getVideo(videoId);
@@ -43,14 +43,12 @@ public class VideoPlayer {
   }
 
   public void stopVideo() {
-    if (playing == null && paused == null){
+    if (playing == null){
       System.out.println("Cannot stop video: No video is currently playing");
-    }else if(playing == null && paused != null){
-      System.out.println("Stopping video: "+paused.getTitle());
-      paused = null;
     }else{
       System.out.println("Stopping video: "+playing.getTitle());
       playing = null;
+      paused = null;
     }
   }
 
@@ -71,9 +69,8 @@ public class VideoPlayer {
   }
 
   public void pauseVideo() {
-    if(paused != null){
+    if(paused.getVideoId() == playing.getVideoId()){
       System.out.println("Video already paused: "+paused.getTitle());
-      playing = null;
     }
 
     if (playing == null){
@@ -81,7 +78,6 @@ public class VideoPlayer {
     }else{
       paused = new Video(playing.getTitle(), playing.getVideoId(), playing.getTags());
       System.out.println("Pausing video: "+paused.getTitle());
-      playing = null;
     }
 
   }
@@ -89,6 +85,8 @@ public class VideoPlayer {
   public void continueVideo() {
     if(paused == null){
       System.out.println("Cannot continue video: Video is not paused");
+    }else if (playing == null){
+      System.out.println("Cannot continue video: No video is currently playing");
     }else {
       playing = new Video(paused.getTitle(), paused.getVideoId(), paused.getTags());
       paused = null;
@@ -97,7 +95,16 @@ public class VideoPlayer {
   }
 
   public void showPlaying() {
-    System.out.println("showPlaying needs implementation");
+    if(playing ==null){
+      System.out.println("No video is currently playing");
+    }else {
+      String output = "";
+      if(playing.getVideoId()== paused.getVideoId()){
+        output = " - PAUSED";
+      }
+      System.out.println("Currently playing: "+playing.getTitle()+playing.getVideoId()+playing.getTags()+output);
+    }
+
   }
 
   public void createPlaylist(String playlistName) {
