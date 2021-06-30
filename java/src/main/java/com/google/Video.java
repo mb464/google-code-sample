@@ -1,4 +1,4 @@
-package java.com.google;
+package com.google;
 
 import java.util.Collections;
 import java.util.List;

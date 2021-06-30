@@ -1,4 +1,4 @@
-package java.com.google;
+package com.google;
 
 public class VideoPlayer {
 
