@@ -5,6 +5,8 @@ import java.util.List;
 
 public class VideoPlayer {
 
+  private Video playing;
+
   private final VideoLibrary videoLibrary;
 
   public VideoPlayer() {
@@ -26,7 +28,16 @@ public class VideoPlayer {
   }
 
   public void playVideo(String videoId) {
-    System.out.println("playVideo needs implementation");
+    if(playing != null){
+      stopVideo();
+    }
+    playing = videoLibrary.getVideo(videoId);
+    if (playing == null){
+      System.out.println("Cannot play video: Video does not exist");
+    }else{
+      System.out.println("Playing video: "+ playing.getTitle());
+    }
+
   }
 
   public void stopVideo() {
