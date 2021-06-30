@@ -87,7 +87,13 @@ public class VideoPlayer {
   }
 
   public void continueVideo() {
-    System.out.println("continueVideo needs implementation");
+    if(paused == null){
+      System.out.println("Cannot continue video: Video is not paused");
+    }else {
+      playing = new Video(paused.getTitle(), paused.getVideoId(), paused.getTags());
+      paused = null;
+    }
+
   }
 
   public void showPlaying() {
