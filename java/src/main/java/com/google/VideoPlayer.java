@@ -137,7 +137,34 @@ public class VideoPlayer {
   }
 
   public void addVideoToPlaylist(String playlistName, String videoId) {
-    System.out.println("addVideoToPlaylist needs implementation");
+    boolean exits = false;
+    int playerIndex = 0;
+    for (VideoPlaylist x:playlists) {
+      playerIndex++;
+      if (x.getId().toLowerCase()==playlistName.toLowerCase()){
+        exits = true;
+        break;
+      }
+    }
+
+    if (exits){
+      exits = false;
+      if (videoLibrary.getVideo(videoId)!= null){
+        exits = true;
+      }
+      if (exits){
+        if(playlists.get(playerIndex).contain(videoLibrary.getVideo(videoId))){
+          System.out.println("Cannot add video to my_PLAYlist: Video already added");
+        }else {
+          playlists.get(playerIndex).addVideo(videoLibrary.getVideo(videoId));
+          System.out.println("Added video to "+playlistName+" : "+videoId);
+        }
+      }else {
+        System.out.println("Cannot add video to my_playlist: Video does not exist");
+      }
+    }else{
+      System.out.println("Cannot add video to another_playlist: Playlist does not exist");
+    }
   }
 
   public void showAllPlaylists() {
@@ -145,7 +172,10 @@ public class VideoPlayer {
   }
 
   public void showPlaylist(String playlistName) {
-    System.out.println("showPlaylist needs implementation");
+    if (playlists.size() ==0){
+      System.out.println("No playlists exist yet");
+    }
+
   }
 
   public void removeFromPlaylist(String playlistName, String videoId) {
