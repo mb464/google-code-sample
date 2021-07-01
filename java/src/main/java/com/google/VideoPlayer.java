@@ -6,7 +6,7 @@ public class VideoPlayer {
 
   private Video playing;
   private Video paused;
-  private List<VideoPlaylist> playlists;
+  private List<VideoPlaylist> playlists = new ArrayList<>();
 
   private final VideoLibrary videoLibrary;
 
@@ -122,12 +122,15 @@ public class VideoPlayer {
 
     if (playlistName.indexOf(' ') == -1){
       boolean exits = false;
-      for (VideoPlaylist x:playlists) {
-        if (x.getId().toLowerCase()==playlistName.toLowerCase()){
-          exits = true;
+      if(playlists != null){
+        for (VideoPlaylist x:playlists) {
+          if (x.getId().toLowerCase()==playlistName.toLowerCase()){
+            exits = true;
+          }
         }
       }
-      if (!exits){
+
+      if (exits){
         System.out.println("Cannot create playlist: A playlist with the same name already exists");
       }else{
         playlists.add(new VideoPlaylist(playlistName));
@@ -172,7 +175,20 @@ public class VideoPlayer {
   }
 
   public void showAllPlaylists() {
-    System.out.println("showAllPlaylists needs implementation");
+    if (playlists.size() == 0){
+      System.out.println("No playlists exist yet");
+    }else {
+      List<String> alphaPlay = new ArrayList<>();
+      for (VideoPlaylist x:playlists) {
+        alphaPlay.add(x.getId());
+      }
+      Collections.sort(alphaPlay);
+      System.out.println("Showing all playlists:");
+      for (String x :alphaPlay) {
+        System.out.println(x);
+      }
+    }
+
   }
 
   public void showPlaylist(String playlistName) {
