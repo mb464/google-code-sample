@@ -30,7 +30,6 @@ public class VideoPlayer {
 
     for (String x :name) {
       System.out.println(videoLibrary.getVideo(x).getTitle()+" (" + videoLibrary.getVideo(x).getVideoId()+") " +  videoLibrary.getVideo(x).getTags().toString().replaceAll(",",""));
-
     }
 
   }
@@ -192,8 +191,29 @@ public class VideoPlayer {
   }
 
   public void showPlaylist(String playlistName) {
-    if (playlists.size() ==0){
+    boolean exists = false;
+    int index = -1;
+    for (VideoPlaylist x:playlists) {
+      index++;
+      if (x.getId().toLowerCase() == playlistName.toLowerCase()){
+        exists = true;
+        break;
+      }
+    }
+    if (playlists== null || !exists){
       System.out.println("No playlists exist yet");
+    }else{
+      List<Video> vids = playlists.get(index).getPlaylist();
+      if (vids.size() ==0){
+        System.out.println("No videos here yet");
+      }else{
+        for (Video x:vids) {
+          System.out.println("Showing playlist: "+playlistName);
+          System.out.println(x.getTitle()+" (" + x.getVideoId()+") " +  x.getTags().toString().replaceAll(",",""));
+
+        }
+      }
+
     }
 
   }
