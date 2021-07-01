@@ -24,7 +24,7 @@ public class VideoPlayer {
 
     List<Video> videos =videoLibrary.getVideos();
     for (Video x:videos) {
-      System.out.println("  "+ x.getTitle() + x.getVideoId() +  x.getTags());
+      System.out.println(x.getTitle()+" (" + x.getVideoId()+") " +  x.getTags().toString().replaceAll(",",""));
     }
 
   }

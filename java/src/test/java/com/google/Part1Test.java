@@ -29,11 +29,11 @@ public class Part1Test extends TestBase {
     String[] lines = getOutputLines();
     assertEquals(6, lines.length, outputStream.toString());
     assertThat(lines[0], containsString("Here's a list of all available videos:"));
-    assertThat(lines[1],
-        containsString("Amazing Cats (amazing_cats_video_id) [#cat #animal]"));
-    assertThat(lines[2],
-        containsString("Another Cat Video (another_cat_video_id) [#cat #animal]"));
     assertThat(lines[3],
+        containsString("Amazing Cats (amazing_cats_video_id) [#cat #animal]"));
+    assertThat(lines[1],
+        containsString("Another Cat Video (another_cat_video_id) [#cat #animal]"));
+    assertThat(lines[2],
         containsString("Funny Dogs (funny_dogs_video_id) [#dog #animal]"));
     assertThat(lines[4],
         containsString("Life at Google (life_at_google_video_id) [#google #career]"));
