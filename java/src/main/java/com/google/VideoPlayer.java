@@ -1,9 +1,6 @@
 package com.google;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Random;
-import java.util.List;
+import java.util.*;
 
 public class VideoPlayer {
 
@@ -25,8 +22,15 @@ public class VideoPlayer {
     System.out.println("Here's a list of all available videos:");
 
     List<Video> videos =videoLibrary.getVideos();
+    ArrayList<String> name = new ArrayList<>();
     for (Video x:videos) {
-      System.out.println(x.getTitle()+" (" + x.getVideoId()+") " +  x.getTags().toString().replaceAll(",",""));
+      name.add(name.size(),x.getVideoId());
+    }
+    Collections.sort(name);
+
+    for (String x :name) {
+      System.out.println(videoLibrary.getVideo(x).getTitle()+" (" + videoLibrary.getVideo(x).getVideoId()+") " +  videoLibrary.getVideo(x).getTags().toString().replaceAll(",",""));
+
     }
 
   }
