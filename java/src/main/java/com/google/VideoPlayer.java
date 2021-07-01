@@ -30,13 +30,14 @@ public class VideoPlayer {
   }
 
   public void playVideo(String videoId) {
-    if(playing != null || paused.getVideoId() != videoId){
+    if (videoLibrary.getVideo(videoId) == null){
+      System.out.println("Cannot play video: Video does not exist");
+    }else if(playing != null ||(paused != null && paused.getVideoId() != videoId)){
       stopVideo();
     }
-    playing = videoLibrary.getVideo(videoId);
-    if (playing == null){
-      System.out.println("Cannot play video: Video does not exist");
-    }else{
+
+    if (videoLibrary.getVideo(videoId) != null){
+      playing = videoLibrary.getVideo(videoId);
       System.out.println("Playing video: "+ playing.getTitle());
     }
 
@@ -69,26 +70,30 @@ public class VideoPlayer {
   }
 
   public void pauseVideo() {
-    if(paused.getVideoId() == playing.getVideoId()){
-      System.out.println("Video already paused: "+paused.getTitle());
-    }
+    try{
+      if(paused.getVideoId() == playing.getVideoId()){
+        System.out.println("Video already paused: "+paused.getTitle());
+      }
+    }catch (Exception e){
+      if (playing == null){
+        System.out.println("Cannot pause video: No video is currently playing");
+      }else{
+        paused = new Video(playing.getTitle(), playing.getVideoId(), playing.getTags());
+        System.out.println("Pausing video: "+paused.getTitle());
+      }
 
-    if (playing == null){
-      System.out.println("Cannot pause video: No video is currently playing");
-    }else{
-      paused = new Video(playing.getTitle(), playing.getVideoId(), playing.getTags());
-      System.out.println("Pausing video: "+paused.getTitle());
     }
 
   }
 
   public void continueVideo() {
-    if(paused == null){
-      System.out.println("Cannot continue video: Video is not paused");
-    }else if (playing == null){
+    if(playing == null){
       System.out.println("Cannot continue video: No video is currently playing");
+    }else if (paused == null){
+      System.out.println("Cannot continue video: Video is not paused");
     }else {
       playing = new Video(paused.getTitle(), paused.getVideoId(), paused.getTags());
+      System.out.println("Continuing video: "+playing.getTitle());
       paused = null;
     }
 
@@ -99,10 +104,10 @@ public class VideoPlayer {
       System.out.println("No video is currently playing");
     }else {
       String output = "";
-      if(playing.getVideoId()== paused.getVideoId()){
+      if(paused != null){
         output = " - PAUSED";
       }
-      System.out.println("Currently playing: "+playing.getTitle()+playing.getVideoId()+playing.getTags()+output);
+      System.out.println("Currently playing: "+playing.getTitle()+" ("+playing.getVideoId()+") "+playing.getTags().toString().replaceAll(",","")+output);
     }
 
   }

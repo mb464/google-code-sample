@@ -73,6 +73,11 @@ public class Part1Test extends TestBase {
     videoPlayer.playVideo("some_other_video");
 
     String[] lines = getOutputLines();
+    for (String x:lines
+         ) {
+      System.out.println(x);
+    }
+
     assertEquals(2, lines.length, outputStream.toString());
     assertThat(lines[0], not(containsString("Stopping video: Amazing Cats")));
     assertThat(lines[1], containsString("Cannot play video: Video does not exist"));
